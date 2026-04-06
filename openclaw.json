@@ -5,8 +5,7 @@
 		],
 		"bind": "lan",
 		"auth": {
-			"mode": "password",
-			"password": "[your-password]"
+			"password": "${OPENCLAW_GATEWAY_PASSWORD}"
 		},
 		"controlUi": {
 			"dangerouslyDisableDeviceAuth": true,

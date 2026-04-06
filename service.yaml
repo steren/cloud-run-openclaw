@@ -18,17 +18,7 @@ spec:
           - containerPort: 18789
         resources:
           limits:
-            cpu: "1"
             memory: "4Gi"
-        env:       
-        - name: GEMINI_API_KEY
-          value: "[YOUR_API_KEY]"
-        # Recommended securely passing API Key via Google Cloud Secret Manager:
-        # - name: GEMINI_API_KEY
-        #   valueFrom:
-        #     secretKeyRef:
-        #       key: latest
-        #       name: gemini-api-key-secret # The name of your secret in GCP Secret Manager
         volumeMounts:
         - name: openclaw-config
           mountPath: /home/node/.openclaw

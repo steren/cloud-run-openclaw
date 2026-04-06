@@ -9,15 +9,16 @@ Deploy OpenClaw effortlessly on Google Cloud Run using standard Knative YAML con
    gcloud auth login
    gcloud config set project YOUR_PROJECT_ID
    ```
-3. Open `service.yaml` and replace `[YOUR_API_KEY]` with your actual GEMINI_API_KEY (or configure integration with Cloud Secret Manager mapping).
-4. Open `openclaw.json` and replace `[your-password]` with a password of your choice.
+3. Create a `.env` file in the root of this project and set your password and API key:
+   ```env
+   OPENCLAW_GATEWAY_PASSWORD=your_secure_password
+   GEMINI_API_KEY=your_actual_api_key
+   ```
 
 ## Deployment
 
-You can deploy the service to Cloud Run by running:
+You can deploy the service to Cloud Run by running the deployment script:
 
 ```bash
-gcloud run services replace service.yaml --region europe-west9
+./deploy.sh
 ```
-
-*(Feel free to update `--region` to point to the GCP region closest to you).*
