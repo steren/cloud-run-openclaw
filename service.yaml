@@ -1,7 +1,7 @@
 apiVersion: serving.knative.dev/v1
 kind: Service
 metadata:
-  name: openclaw-10
+  name: openclaw
   annotations:
     run.googleapis.com/scalingMode: manual
     run.googleapis.com/manualInstanceCount: "1"
@@ -11,7 +11,6 @@ spec:
     metadata:
       annotations:
         run.googleapis.com/cpu-throttling: "false"
-        run.googleapis.com/execution-environment: "gen2"
     spec:
       volumes:
       - name: openclaw-config
@@ -20,7 +19,7 @@ spec:
           volumeAttributes:
             bucketName: steren-openclaw-bucket
       containers:
-      - image: dr34m/openclaw:latest
+      - image: alpine/openclaw:latest
         name: gateway
         volumeMounts:
         - name: openclaw-config
@@ -30,17 +29,7 @@ spec:
           - /app/dist/index.js
           - gateway
           - run
-          - --bind
-          - lan
-        env:
-        - name: HOME
-          value: /home/node
-        - name: NODE_ENV
-          value: production
-        
-        # ⚠️ Hardcoding plain text secrets is not recommended for production.
-        # Ensure to replace "YOUR_GEMINI_API_KEY" with your actual Gemini API key before deployment,
-        # or use Cloud Run Secret Manager integration as shown below.
+        env:       
         - name: GEMINI_API_KEY
           value: "YOUR_API_KEY"          
         # 🛡️ Recommended securely passing API Key via Google Cloud Secret Manager:
