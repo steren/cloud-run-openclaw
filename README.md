@@ -14,11 +14,25 @@ Deploy OpenClaw effortlessly on Google Cloud Run using standard Knative YAML con
    OPENCLAW_GATEWAY_PASSWORD=your_secure_password
    GEMINI_API_KEY=your_actual_api_key
    ```
+4. Create a Google Cloud Storage bucket:
+   ```bash
+   gcloud storage buckets create gs://YOUR_BUCKET_NAME --location=YOUR_REGION
+   ```
+5. Copy the `.env` and `openclaw.json` files at the root of the bucket.
+   ```bash
+   gcloud storage cp openclaw.json .env gs://YOUR_BUCKET_NAME/
+   ```
 
 ## Deployment
 
-You can deploy the service to Cloud Run by running the deployment script:
+Deploy with
 
 ```bash
-./deploy.sh
+gcloud beta run deploy openclaw --image alpine/openclaw:latest \
+  --port 18789 \
+  --memory 4Gi \
+  --scaling 1 \
+  --no-cpu-throttling \
+  --no-invoker-iam-check \
+  --add-volume mount-path=/home/node/.openclaw,type=cloud-storage,bucket=YOUR_BUCKET_NAME
 ```
