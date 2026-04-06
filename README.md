@@ -9,7 +9,8 @@ Deploy OpenClaw effortlessly on Google Cloud Run using standard Knative YAML con
    gcloud auth login
    gcloud config set project YOUR_PROJECT_ID
    ```
-3. Open `service.yaml` and update the environment variable `GEMINI_API_KEY` with your actual key (or configure integration with Cloud Secret Manager mapping).
+3. Open `service.yaml` and replace `[YOUR_API_KEY]` with your actual GEMINI_API_KEY (or configure integration with Cloud Secret Manager mapping).
+4. Open `openclaw.json` and replace `[your-password]` with a password of your choice.
 
 ## Deployment
 
