@@ -22,8 +22,8 @@ spec:
             memory: "4Gi"
         env:       
         - name: GEMINI_API_KEY
-          value: "YOUR_API_KEY"          
-        # 🛡️ Recommended securely passing API Key via Google Cloud Secret Manager:
+          value: "[YOUR_API_KEY]"
+        # Recommended securely passing API Key via Google Cloud Secret Manager:
         # - name: GEMINI_API_KEY
         #   valueFrom:
         #     secretKeyRef:

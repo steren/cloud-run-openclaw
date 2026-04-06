@@ -1,14 +1,12 @@
 {
 	"gateway": {
-		"mode": "local",
 		"trustedProxies": [
 			"0.0.0.0/0"
 		],
 		"bind": "lan",
-		"port": 18789,
 		"auth": {
-			"mode": "token",
-			"token": "d82a20dae956c05c21831e508395b8354521337f72b0b9cf"
+			"mode": "password",
+			"password": "[your-password]"
 		},
 		"controlUi": {
 			"dangerouslyDisableDeviceAuth": true,
@@ -20,13 +18,9 @@
 	},
 	"agents": {
 		"defaults": {
-			"workspace": "~/.openclaw/workspace",
 			"model": {
 				"primary": "google/gemini-3.1-pro-preview"
 			}
 		}
-	},
-	"cron": {
-		"enabled": false
 	}
 }
