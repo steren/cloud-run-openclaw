@@ -10,12 +10,11 @@ gcloud storage buckets create gs://$BUCKET_NAME --location="$REGION" || true
 gcloud storage cp openclaw.json .env gs://$BUCKET_NAME/
 
 # Deploy
-gcloud beta run deploy openclaw \
+gcloud alpha run instances create openclaw-instance \
   --image alpine/openclaw:latest \
   --port 18789 \
   --memory 4Gi \
-  --scaling 1 \
-  --no-cpu-throttling \
+  --ingress all \
   --no-invoker-iam-check \
   --add-volume mount-path=/home/node/.openclaw,type=cloud-storage,bucket=$BUCKET_NAME \
   --region "$REGION"
