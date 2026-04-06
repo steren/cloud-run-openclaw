@@ -12,23 +12,14 @@ spec:
       annotations:
         run.googleapis.com/cpu-throttling: "false"
     spec:
-      volumes:
-      - name: openclaw-config
-        csi:
-          driver: gcsfuse.run.googleapis.com
-          volumeAttributes:
-            bucketName: steren-openclaw-bucket
       containers:
       - image: alpine/openclaw:latest
-        name: gateway
-        volumeMounts:
-        - name: openclaw-config
-          mountPath: /home/node/.openclaw
-        command:
-          - node
-          - /app/dist/index.js
-          - gateway
-          - run
+        ports:
+          - containerPort: 18789
+        resources:
+          limits:
+            cpu: "1"
+            memory: "4Gi"
         env:       
         - name: GEMINI_API_KEY
           value: "YOUR_API_KEY"          
@@ -38,10 +29,12 @@ spec:
         #     secretKeyRef:
         #       key: latest
         #       name: gemini-api-key-secret # The name of your secret in GCP Secret Manager
-        ports:
-          - containerPort: 18789
-
-        resources:
-          limits:
-            cpu: "2"
-            memory: "4Gi"
+        volumeMounts:
+        - name: openclaw-config
+          mountPath: /home/node/.openclaw
+      volumes:
+      - name: openclaw-config
+        csi:
+          driver: gcsfuse.run.googleapis.com
+          volumeAttributes:
+            bucketName: steren-openclaw-bucket
