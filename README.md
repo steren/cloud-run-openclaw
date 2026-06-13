@@ -36,3 +36,7 @@ gcloud beta run deploy openclaw --image alpine/openclaw:latest \
   --no-invoker-iam-check \
   --add-volume mount-path=/home/node/.openclaw,type=cloud-storage,bucket=YOUR_BUCKET_NAME
 ```
+
+Open the URL
+
+Enter the password (not the Gateaway token)

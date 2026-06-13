@@ -1,5 +1,6 @@
 {
 	"gateway": {
+		"mode": "local",
 		"trustedProxies": [
 			"0.0.0.0/0"
 		],
@@ -19,6 +20,13 @@
 		"defaults": {
 			"model": {
 				"primary": "google/gemini-3.1-pro-preview"
+			}
+		}
+	},
+	"plugins": {
+		"entries": {
+			"google": {
+				"enabled": true
 			}
 		}
 	}
