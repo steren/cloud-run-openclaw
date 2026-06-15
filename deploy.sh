@@ -11,7 +11,7 @@ IMAGE="alpine/openclaw:latest"
 gcloud storage buckets create gs://$BUCKET_NAME --location="$REGION" || true
 
 # Copy config
-gcloud storage cp openclaw.json .env gs://$BUCKET_NAME/
+gcloud storage cp openclaw.json gs://$BUCKET_NAME/
 
 # Deploy
 gcloud alpha run instances create openclaw-instance \
@@ -21,6 +21,7 @@ gcloud alpha run instances create openclaw-instance \
   --memory 4Gi \
   --ingress all \
   --no-invoker-iam-check \
-  --add-volume mount-path=/home/node/.openclaw,type=cloud-storage,bucket=$BUCKET_NAME \
+  --add-volume mount-path=/persistent,type=cloud-storage,bucket=$BUCKET_NAME \
+  --env-vars-file .env \
   --region "$REGION"
   
