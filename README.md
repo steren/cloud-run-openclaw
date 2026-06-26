@@ -13,8 +13,6 @@ Deploy OpenClaw effortlessly on Google Cloud Run using standard Knative YAML con
    ```env
    OPENCLAW_GATEWAY_PASSWORD=your_secure_password
    GEMINI_API_KEY=your_actual_api_key
-   OPENCLAW_CONFIG_PATH="/persistent/openclaw.json"
-   OPENCLAW_STATE_DIR="/tmp/openclaw"
    ```
 4. Create a Google Cloud Storage bucket:
    ```bash
@@ -30,13 +28,11 @@ Deploy OpenClaw effortlessly on Google Cloud Run using standard Knative YAML con
 Deploy with
 
 ```bash
-gcloud alpha run instances create openclaw-instance --image alpine/openclaw:latest \
+gcloud alpha run instances create openclaw --image alpine/openclaw:latest \
   --port 18789 \
-  --cpu 2 \
-  --memory 4Gi \
-  --ingress all \
+  --memory 2Gi \
   --no-invoker-iam-check \
-  --add-volume mount-path=/persistent,type=cloud-storage,bucket=YOUR_BUCKET_NAME \
+  --add-volume mount-path=/home/node/.openclaw,type=cloud-storage,bucket=YOUR_BUCKET_NAME \
   --env-vars-file .env
 ```
 
