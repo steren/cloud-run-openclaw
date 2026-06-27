@@ -26,6 +26,8 @@ echo "Setting up Service Account ${SERVICE_ACCOUNT_EMAIL}..."
 gcloud iam service-accounts create $SERVICE_ACCOUNT_NAME --display-name="OpenClaw Service Account" || true
 gcloud storage buckets add-iam-policy-binding gs://$BUCKET_NAME --member="serviceAccount:${SERVICE_ACCOUNT_EMAIL}" --role="roles/storage.objectAdmin"
 gcloud projects add-iam-policy-binding $PROJECT_ID --member="serviceAccount:${SERVICE_ACCOUNT_EMAIL}" --role="roles/aiplatform.user"
+gcloud secrets add-iam-policy-binding gemini-api-key --member="serviceAccount:${SERVICE_ACCOUNT_EMAIL}" --role="roles/secretmanager.secretAccessor"
+gcloud secrets add-iam-policy-binding openclaw-gateway-password --member="serviceAccount:${SERVICE_ACCOUNT_EMAIL}" --role="roles/secretmanager.secretAccessor"
 
 # Deploy
 gcloud alpha run instances create clanker \

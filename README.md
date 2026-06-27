@@ -36,6 +36,12 @@ Deploy OpenClaw effortlessly on Google Cloud Run using standard Knative YAML con
    gcloud projects add-iam-policy-binding YOUR_PROJECT_ID \
      --member="serviceAccount:openclaw-sa@YOUR_PROJECT_ID.iam.gserviceaccount.com" \
      --role="roles/aiplatform.user"
+   gcloud secrets add-iam-policy-binding gemini-api-key \
+     --member="serviceAccount:openclaw-sa@YOUR_PROJECT_ID.iam.gserviceaccount.com" \
+     --role="roles/secretmanager.secretAccessor"
+   gcloud secrets add-iam-policy-binding openclaw-gateway-password \
+     --member="serviceAccount:openclaw-sa@YOUR_PROJECT_ID.iam.gserviceaccount.com" \
+     --role="roles/secretmanager.secretAccessor"
    ```
 
 ## Deployment
