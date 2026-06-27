@@ -35,7 +35,8 @@ Deploy with
 ```bash
 gcloud alpha run instances create openclaw --image alpine/openclaw:latest \
   --port 18789 \
-  --memory 2Gi \
+  --cpu 4 \
+  --memory 4Gi \
   --no-invoker-iam-check \
   --add-volume mount-path=/home/node/.openclaw,type=cloud-storage,mount-options="uid=1000;gid=1000;file-mode=0777;dir-mode=0777",bucket=YOUR_BUCKET_NAME \
   --set-secrets GEMINI_API_KEY=gemini-api-key:latest,OPENCLAW_GATEWAY_PASSWORD=openclaw-gateway-password:latest

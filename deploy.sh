@@ -23,7 +23,8 @@ gcloud storage cp openclaw.json gs://$BUCKET_NAME/
 gcloud alpha run instances create clanker \
   --image "$IMAGE" \
   --port 18789 \
-  --memory 2Gi \
+  --cpu 4 \
+  --memory 4Gi \
   --no-invoker-iam-check \
   --add-volume mount-path=/home/node/.openclaw,type=cloud-storage,mount-options="uid=1000;gid=1000;file-mode=0700;dir-mode=0700",bucket=$BUCKET_NAME \
   --set-secrets GEMINI_API_KEY=gemini-api-key:latest,OPENCLAW_GATEWAY_PASSWORD=openclaw-gateway-password:latest \
