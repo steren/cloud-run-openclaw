@@ -19,9 +19,18 @@ gcloud storage buckets create gs://$BUCKET_NAME --location="$REGION" || true
 # Copy config
 gcloud storage cp openclaw.json gs://$BUCKET_NAME/
 
+# Create Service Account
+SERVICE_ACCOUNT_NAME="openclaw-sa"
+SERVICE_ACCOUNT_EMAIL="${SERVICE_ACCOUNT_NAME}@${PROJECT_ID}.iam.gserviceaccount.com"
+echo "Setting up Service Account ${SERVICE_ACCOUNT_EMAIL}..."
+gcloud iam service-accounts create $SERVICE_ACCOUNT_NAME --display-name="OpenClaw Service Account" || true
+gcloud storage buckets add-iam-policy-binding gs://$BUCKET_NAME --member="serviceAccount:${SERVICE_ACCOUNT_EMAIL}" --role="roles/storage.objectAdmin"
+gcloud projects add-iam-policy-binding $PROJECT_ID --member="serviceAccount:${SERVICE_ACCOUNT_EMAIL}" --role="roles/aiplatform.user"
+
 # Deploy
 gcloud alpha run instances create clanker \
   --image "$IMAGE" \
+  --service-account "$SERVICE_ACCOUNT_EMAIL" \
   --port 18789 \
   --cpu 4 \
   --memory 4Gi \

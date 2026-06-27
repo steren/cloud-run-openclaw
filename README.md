@@ -27,6 +27,16 @@ Deploy OpenClaw effortlessly on Google Cloud Run using standard Knative YAML con
    ```bash
    gcloud storage cp openclaw.json gs://YOUR_BUCKET_NAME/
    ```
+7. Create a dedicated service account and grant it necessary permissions:
+   ```bash
+   gcloud iam service-accounts create openclaw-sa --display-name="OpenClaw Service Account"
+   gcloud storage buckets add-iam-policy-binding gs://YOUR_BUCKET_NAME \
+     --member="serviceAccount:openclaw-sa@YOUR_PROJECT_ID.iam.gserviceaccount.com" \
+     --role="roles/storage.objectAdmin"
+   gcloud projects add-iam-policy-binding YOUR_PROJECT_ID \
+     --member="serviceAccount:openclaw-sa@YOUR_PROJECT_ID.iam.gserviceaccount.com" \
+     --role="roles/aiplatform.user"
+   ```
 
 ## Deployment
 
@@ -34,6 +44,7 @@ Deploy with
 
 ```bash
 gcloud alpha run instances create openclaw --image alpine/openclaw:latest \
+  --service-account openclaw-sa@YOUR_PROJECT_ID.iam.gserviceaccount.com \
   --port 18789 \
   --cpu 4 \
   --memory 4Gi \
