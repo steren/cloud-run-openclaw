@@ -59,6 +59,22 @@ gcloud alpha run instances create openclaw --image alpine/openclaw:latest \
   --set-secrets GEMINI_API_KEY=gemini-api-key:latest,OPENCLAW_GATEWAY_PASSWORD=openclaw-gateway-password:latest
 ```
 
-Open the URL
+## Connecting to OpenClaw
 
-Enter the password (not the Gateway token)
+### 1. Web UI
+1. Open the Cloud Run service URL in your browser.
+2. Enter the password.
+3. Confirm that you can chat with the bot.
+4. Introduce yourself to the bot!
+
+### 2. Connect to Telegram
+1. On Telegram, contact **BotFather** to create a new bot.
+2. Get the `botToken` from BotFather.
+3. Provide the token to OpenClaw to connect it.
+
+### 3. App Setup
+To connect the OpenClaw desktop or mobile app:
+1. Ask the Web UI for a setup code.
+2. Add the password.
+3. For the port, use `443`.
+4. For the WebSocket URL, use `wss://<URL of the Cloud Run service>` (e.g., replace `https://` with `wss://`).
