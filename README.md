@@ -7,7 +7,7 @@ Deploy OpenClaw effortlessly on Google Cloud Run using standard Knative YAML con
 2. Authenticate with Google Cloud and set your project:
    ```bash
    gcloud auth login
-   gcloud config set project YOUR_PROJECT_ID
+   gcloud config set project $(gcloud config get-value project)
    ```
 3. Enable the Vertex AI API in your Google Cloud Project:
    ```bash
@@ -31,16 +31,16 @@ Deploy OpenClaw effortlessly on Google Cloud Run using standard Knative YAML con
    ```bash
    gcloud iam service-accounts create openclaw-sa --display-name="OpenClaw Service Account"
    gcloud storage buckets add-iam-policy-binding gs://YOUR_BUCKET_NAME \
-     --member="serviceAccount:openclaw-sa@YOUR_PROJECT_ID.iam.gserviceaccount.com" \
+     --member="serviceAccount:openclaw-sa@$(gcloud config get-value project).iam.gserviceaccount.com" \
      --role="roles/storage.objectAdmin"
-   gcloud projects add-iam-policy-binding YOUR_PROJECT_ID \
-     --member="serviceAccount:openclaw-sa@YOUR_PROJECT_ID.iam.gserviceaccount.com" \
+   gcloud projects add-iam-policy-binding $(gcloud config get-value project) \
+     --member="serviceAccount:openclaw-sa@$(gcloud config get-value project).iam.gserviceaccount.com" \
      --role="roles/aiplatform.user"
    gcloud secrets add-iam-policy-binding gemini-api-key \
-     --member="serviceAccount:openclaw-sa@YOUR_PROJECT_ID.iam.gserviceaccount.com" \
+     --member="serviceAccount:openclaw-sa@$(gcloud config get-value project).iam.gserviceaccount.com" \
      --role="roles/secretmanager.secretAccessor"
    gcloud secrets add-iam-policy-binding openclaw-gateway-password \
-     --member="serviceAccount:openclaw-sa@YOUR_PROJECT_ID.iam.gserviceaccount.com" \
+     --member="serviceAccount:openclaw-sa@$(gcloud config get-value project).iam.gserviceaccount.com" \
      --role="roles/secretmanager.secretAccessor"
    ```
 
@@ -50,7 +50,7 @@ Deploy with
 
 ```bash
 gcloud alpha run instances create openclaw --image alpine/openclaw:latest \
-  --service-account openclaw-sa@YOUR_PROJECT_ID.iam.gserviceaccount.com \
+  --service-account openclaw-sa@$(gcloud config get-value project).iam.gserviceaccount.com \
   --port 18789 \
   --cpu 4 \
   --memory 4Gi \
