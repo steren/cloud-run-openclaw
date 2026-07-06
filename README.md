@@ -49,7 +49,7 @@ Deploy OpenClaw effortlessly on Google Cloud Run using standard Knative YAML con
 Deploy with
 
 ```bash
-gcloud alpha run instances create openclaw --image alpine/openclaw:latest \
+gcloud alpha run instances create clanker --image alpine/openclaw:latest \
   --service-account openclaw-sa@$(gcloud config get-value project).iam.gserviceaccount.com \
   --port 18789 \
   --cpu 4 \
